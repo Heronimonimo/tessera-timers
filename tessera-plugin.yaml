@@ -1,0 +1,47 @@
+# Timers: a kitchen timer and a stopwatch on the glass. The timer is set with keys that add time (+10 s, +1 min,
+# +10 min, +1 h) and runs either on the screen itself or as a timer helper of Home Assistant; the stopwatch runs on the
+# screen and keeps laps. Every name, label and hint is a key into translations/<language>.json, part "app".
+id: timers
+version: 0.1.0
+api: "0.12"
+icon: timer-outline
+maintainer: Heronimonimo
+license: MIT
+stage: beta
+topics: [time, home]
+requires:
+  esphome: 2026.6.2
+boards: any
+flash_kb: 24
+
+permissions:
+  # Only for a timer tile that belongs to a timer helper of Home Assistant; a timer on the screen calls nothing.
+  home_assistant_actions: [timer.start, timer.pause, timer.cancel]
+
+tiles:
+  # A timer. With a timer helper chosen it starts, pauses and cancels that timer in Home Assistant; without one it runs
+  # on the screen. A tap on a key adds time or starts it; a tap elsewhere opens the card with every key.
+  - id: timer
+    name: timer_name
+    icon: timer-outline
+    sizes: { min: 1x1, max: 3x3 }
+    memory: 2400
+    domains: [timer]
+    attributes: [duration, remaining, finishes_at]
+    example: timer_example
+    preview: { title: "{name}", value: "{remaining}" }
+  # A stopwatch on the screen, with the last three laps.
+  - id: stopwatch
+    name: stopwatch_name
+    icon: timer
+    sizes: { min: 1x1, max: 3x3 }
+    memory: 2200
+    example: stopwatch_example
+
+cards:
+  - { id: timer, name: timer_card, wide: true }
+  - { id: stopwatch, name: stopwatch_card, wide: true }
+
+# The setting of plugin.yaml, also in the plugin's details on the screen's Plugins tab (its name as id).
+settings:
+  - { key: timer_opens_when_done, label: setting_opens, hint: setting_opens_hint }

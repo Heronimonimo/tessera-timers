@@ -1,0 +1,20 @@
+# What a screen gets when it takes this plugin: the component, a sensor that tells Home Assistant a timer on the screen
+# is done (for a notification on your phone), and the setting that opens the timer's card when it is done.
+binary_sensor:
+  - platform: template
+    id: timers_done
+    name: "Timer done"
+    icon: mdi:timer-alert-outline
+
+switch:
+  - platform: template
+    id: timers_opens
+    name: "Timer opens when done"
+    icon: mdi:timer-eye-outline
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON
+    entity_category: config
+
+timers:
+  done: timers_done
+  opens_when_done: timers_opens

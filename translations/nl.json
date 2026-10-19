@@ -1,0 +1,39 @@
+{
+  "_meta": { "name": "Nederlands" },
+  "screen": {
+    "timer": "Timer",
+    "stopwatch": "Stopwatch",
+    "add_10s": "+10s",
+    "add_1m": "+1m",
+    "add_10m": "+10m",
+    "add_1h": "+1u",
+    "start": "Start",
+    "pause": "Pauze",
+    "resume": "Verder",
+    "cancel": "Stoppen",
+    "reset": "Wissen",
+    "stop": "Stop",
+    "lap": "Ronde",
+    "done": "Klaar",
+    "ready": "Tijd erbij",
+    "paused": "Gepauzeerd",
+    "of": "van {time}",
+    "ends": "klaar om {time}",
+    "lap_n": "Ronde {n}",
+    "no_clock": "Wacht op de klok",
+    "unavailable": "Niet beschikbaar",
+    "opens_when_done": "Openen als hij klaar is"
+  },
+  "app": {
+    "name": "Timers",
+    "summary": "Een keukenwekker die je zet met +10s, +1m, +10m en +1u, en een stopwatch met rondetijden.",
+    "timer_name": "Timer",
+    "timer_example": "Pasta, 5:46 van 8:00",
+    "stopwatch_name": "Stopwatch",
+    "stopwatch_example": "12:34, ronde 3",
+    "timer_card": "Timer",
+    "stopwatch_card": "Stopwatch",
+    "setting_opens": "Timer openen als hij klaar is",
+    "setting_opens_hint": "Een timer op het scherm opent zijn kaart als de tijd om is, welke pagina er ook staat."
+  }
+}

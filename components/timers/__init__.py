@@ -1,0 +1,36 @@
+"""Timers: a kitchen timer and a stopwatch on the glass.
+
+The timers and stopwatches that run on the screen live in the component (timers.cpp), one slot per tile of the layout,
+and are kept in the screen's flash so a restart picks them up where they were. A timer tile that belongs to a timer
+helper of Home Assistant starts, pauses and cancels that one instead. face.cpp lays out and paints the ring, the time
+and the keys for every size of tile and for the cards. register_plugin() takes the id, version, tile memory and the
+screen's texts from the manifest and translations/ beside this folder.
+"""
+import esphome.codegen as cg
+import esphome.config_validation as cv
+from esphome.components import binary_sensor, smart_display, switch
+from esphome.const import CONF_ID
+
+DEPENDENCIES = ["smart_display", "binary_sensor", "switch"]
+
+CONF_DONE = "done"
+CONF_OPENS = "opens_when_done"
+
+timers_ns = cg.esphome_ns.namespace("timers")
+Timers = timers_ns.class_("Timers", cg.Component)
+
+CONFIG_SCHEMA = cv.Schema(
+    {
+        cv.GenerateID(): cv.declare_id(Timers),
+        cv.Required(CONF_DONE): cv.use_id(binary_sensor.BinarySensor),
+        cv.Required(CONF_OPENS): cv.use_id(switch.Switch),
+    }
+).extend(cv.COMPONENT_SCHEMA)
+
+
+async def to_code(config):
+    var = cg.new_Pvariable(config[CONF_ID])
+    await cg.register_component(var, config)
+    await smart_display.register_plugin(var, __file__)
+    cg.add(var.set_done(await cg.get_variable(config[CONF_DONE])))
+    cg.add(var.set_opens(await cg.get_variable(config[CONF_OPENS])))

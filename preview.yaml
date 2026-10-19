@@ -1,0 +1,35 @@
+# What tools/preview.py shows (docs/PREVIEW.md): a pasta timer of Home Assistant that runs, an oven timer that is
+# paused, a timer on the screen waiting for its time, and a stopwatch. Moments are made from the time of the render.
+tiles:
+  - tile: timer
+    name: Pasta
+    entity: timer.pasta
+  - tile: timer
+    name: Oven
+    entity: timer.oven
+    sizes: [1x1, 2x1, 2x2]
+  - tile: timer
+    name: Kitchen
+    sizes: [1x1, 2x1, 1x2, 2x2]
+  - tile: stopwatch
+    name: Stopwatch
+    sizes: [1x1, 2x1, 1x2, 2x2]
+
+states:
+  timer.pasta:
+    state: active
+    attributes:
+      friendly_name: Pasta
+      duration: "0:08:00"
+      remaining: "0:08:00"
+      finishes_at: "{now+346s}"
+  timer.oven:
+    state: paused
+    attributes:
+      friendly_name: Oven
+      duration: "0:25:00"
+      remaining: "0:12:30"
+
+cards:
+  - { card: timer, entity: timer.pasta }
+  - { card: stopwatch }

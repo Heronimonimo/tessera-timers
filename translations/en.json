@@ -1,0 +1,39 @@
+{
+  "_meta": { "name": "English" },
+  "screen": {
+    "timer": "Timer",
+    "stopwatch": "Stopwatch",
+    "add_10s": "+10s",
+    "add_1m": "+1m",
+    "add_10m": "+10m",
+    "add_1h": "+1h",
+    "start": "Start",
+    "pause": "Pause",
+    "resume": "Resume",
+    "cancel": "Cancel",
+    "reset": "Reset",
+    "stop": "Stop",
+    "lap": "Lap",
+    "done": "Done",
+    "ready": "Add time",
+    "paused": "Paused",
+    "of": "of {time}",
+    "ends": "ends {time}",
+    "lap_n": "Lap {n}",
+    "no_clock": "Waiting for the clock",
+    "unavailable": "Unavailable",
+    "opens_when_done": "Open when done"
+  },
+  "app": {
+    "name": "Timers",
+    "summary": "A kitchen timer you set with +10s, +1m, +10m and +1h, and a stopwatch with laps.",
+    "timer_name": "Timer",
+    "timer_example": "Pasta, 5:46 of 8:00",
+    "stopwatch_name": "Stopwatch",
+    "stopwatch_example": "12:34, lap 3",
+    "timer_card": "Timer",
+    "stopwatch_card": "Stopwatch",
+    "setting_opens": "Open the timer when it is done",
+    "setting_opens_hint": "A timer on the screen opens its card when the time is up, whatever page shows."
+  }
+}
