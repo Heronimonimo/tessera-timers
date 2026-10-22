@@ -16,6 +16,7 @@ tessera::Card *make_card(Timers *plugin, Kind kind);
 
 static constexpr uint32_t MOST_S = 24 * 3600 - 1;           // the add keys stop at 23:59:59
 static constexpr int64_t RINGS_MS = 30 * 60 * 1000;          // a timer that is done says so for half an hour at most
+static constexpr int64_t SOUNDS_MS = 60 * 1000;              // and rings for a minute, or until Stop
 static constexpr uint32_t SAVED_VERSION = 2;
 static constexpr uint32_t ICON_PLAY = 0xF040A, ICON_PAUSE = 0xF03E4, ICON_STOP = 0xF04DB, ICON_RESTART = 0xF0709,
                           ICON_CLOSE = 0xF0156, ICON_PLUS = 0xF0415;
@@ -349,7 +350,7 @@ View Timers::view(Slot &s, const char *entity, const Helper &h) {
 
 void Timers::on_interval(uint32_t now_ms_chip) {
   const int64_t now = now_ms();
-  bool ringing = false;
+  bool ringing = false, sounding = false;
   if (now) {
     for (int i = 0; i < SLOTS; ++i) {
       Slot &s = slots_[i];
@@ -366,8 +367,18 @@ void Timers::on_interval(uint32_t now_ms_chip) {
         changed();
       }
       ringing = ringing || s.run == Run::DONE;
+      sounding = sounding || (s.run == Run::DONE && now - s.done_ms < SOUNDS_MS);
     }
   }
+#ifdef USE_SPEAKER
+  // The alarm again every two seconds while a timer rings; Stop, +1m or Cancel ends it at once.
+  if (sounding && !sounds_.playing() && now_ms_chip - rang_at_ >= 2000) {
+    sounds_.play(alarm_);
+    rang_at_ = now_ms_chip;
+  } else if (!sounding && sounds_.playing()) {
+    sounds_.stop();
+  }
+#endif
   if (done_ != nullptr && (ringing != ringing_ || !done_->has_state())) {
     ringing_ = ringing;
     done_->publish_state(ringing);

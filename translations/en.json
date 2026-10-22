@@ -1,5 +1,7 @@
 {
-  "_meta": { "name": "English" },
+  "_meta": {
+    "name": "English"
+  },
   "screen": {
     "timer": "Timer",
     "stopwatch": "Stopwatch",
@@ -34,6 +36,8 @@
     "timer_card": "Timer",
     "stopwatch_card": "Stopwatch",
     "setting_opens": "Open the timer when it is done",
-    "setting_opens_hint": "A timer on the screen opens its card when the time is up, whatever page shows."
+    "setting_opens_hint": "A timer on the screen opens its card when the time is up, whatever page shows.",
+    "part_sound": "Ring when a timer is done",
+    "part_sound_hint": "Three beeps every two seconds for a minute, or until you tap Stop. Follows the screen's volume."
   }
 }

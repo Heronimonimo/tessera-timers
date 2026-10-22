@@ -1,5 +1,7 @@
 {
-  "_meta": { "name": "Nederlands" },
+  "_meta": {
+    "name": "Nederlands"
+  },
   "screen": {
     "timer": "Timer",
     "stopwatch": "Stopwatch",
@@ -34,6 +36,8 @@
     "timer_card": "Timer",
     "stopwatch_card": "Stopwatch",
     "setting_opens": "Timer openen als hij klaar is",
-    "setting_opens_hint": "Een timer op het scherm opent zijn kaart als de tijd om is, welke pagina er ook staat."
+    "setting_opens_hint": "Een timer op het scherm opent zijn kaart als de tijd om is, welke pagina er ook staat.",
+    "part_sound": "Piepen als een timer klaar is",
+    "part_sound_hint": "Drie piepjes om de twee seconden, een minuut lang of tot je op Stop tikt. Volgt het volume van het scherm."
   }
 }

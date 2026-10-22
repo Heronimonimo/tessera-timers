@@ -2,7 +2,7 @@
 # +10 min, +1 h) and runs either on the screen itself or as a timer helper of Home Assistant; the stopwatch runs on the
 # screen and keeps laps. Every name, label and hint is a key into translations/<language>.json, part "app".
 id: timers
-version: 0.1.0
+version: 0.2.0
 api: "0.12"
 icon: timer-outline
 maintainer: Heronimonimo
@@ -12,7 +12,7 @@ topics: [time, home]
 requires:
   esphome: 2026.6.2
 boards: any
-flash_kb: 24
+flash_kb: 84
 
 permissions:
   # Only for a timer tile that belongs to a timer helper of Home Assistant; a timer on the screen calls nothing.
@@ -41,6 +41,10 @@ tiles:
 cards:
   - { id: timer, name: timer_card, wide: true }
   - { id: stopwatch, name: stopwatch_card, wide: true }
+
+# The alarm when a timer is done, on a screen with a speaker (from its board or another plugin): on by default.
+parts:
+  - { id: sound, file: parts/sound.yaml, label: part_sound, hint: part_sound_hint, features: [speaker], flash_kb: 60, default: true }
 
 # The setting of plugin.yaml, also in the plugin's details on the screen's Plugins tab (its name as id).
 settings:

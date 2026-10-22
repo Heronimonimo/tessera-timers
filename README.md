@@ -31,7 +31,8 @@ The timer:
 - **Setting it**: tap the add keys until the time is right (2 x +1m and 3 x +10s is 2:30), then Start. Reset sets it
   back to 0:00.
 - **While it runs**: the add keys add time to it; Pause and Resume, or Cancel.
-- **When it is done**: its ring and time turn red and it says Done. **+1m** gives it another minute, Stop ends it. A timer on the
+- **When it is done**: its ring and time turn red and it says Done. On a screen with a speaker it rings too: three
+  beeps every two seconds for a minute, or until you tap Stop. **+1m** gives it another minute, Stop ends it. A timer on the
   screen opens its card when it is done, on whatever page shows; turn that off with the setting below.
 
 The stopwatch: Start, Pause and Resume; **Lap** while it runs, **Reset** while it is paused. The tile shows the newest
@@ -46,6 +47,10 @@ The card on the Guition 4-inch and the CYD, drawn by the real firmware on Tesser
 Every tile at every size on the four screens of the bench: [renders/overview.png](renders/overview.png).
 
 ## Settings
+
+On a screen with a speaker (from its board, such as the reTerminal D1001, or from another plugin) the plugin's details
+also have the part **Ring when a timer is done**, on by default. Turn it off for a silent timer; the beeps follow the
+screen's volume.
 
 On the screen's Plugins tab, the plugin's details, **Settings**:
 

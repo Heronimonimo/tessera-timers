@@ -4,6 +4,7 @@
 #include "esphome/components/binary_sensor/binary_sensor.h"
 #include "esphome/components/switch/switch.h"
 #include "esphome/components/smart_display/plugin_api.h"
+#include "esphome/components/smart_display/plugin_sound.h"   // empty on a screen without a speaker
 #include "face.h"
 
 namespace esphome::timers {
@@ -43,6 +44,13 @@ class Timers : public Component, public tessera::Plugin {
 
   void set_done(binary_sensor::BinarySensor *s) { done_ = s; }
   void set_opens(switch_::Switch *s) { opens_ = s; }
+#ifdef USE_SPEAKER
+  // The part parts/sound.yaml, on a screen with a speaker: a timer that is done rings.
+  void set_speaker(speaker::Speaker *s) { sounds_.set_speaker(s); }
+  void set_alarm(tessera::Sound s) { alarm_ = s; }
+  void loop() override { sounds_.loop(); }
+  void before_update() override { sounds_.stop(); }
+#endif
 
   // The screen's clock in milliseconds since 1970, 0 until Home Assistant set it.
   int64_t now_ms();
@@ -72,6 +80,11 @@ class Timers : public Component, public tessera::Plugin {
   uint32_t base_millis_ = 0;
   binary_sensor::BinarySensor *done_{};
   switch_::Switch *opens_{};
+#ifdef USE_SPEAKER
+  tessera::Sound alarm_;
+  tessera::SoundPlayer sounds_;
+  uint32_t rang_at_ = 0;
+#endif
 };
 
 // "8:05" or "1:12:30".

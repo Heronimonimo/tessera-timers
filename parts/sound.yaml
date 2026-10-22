@@ -1,0 +1,4 @@
+# The alarm on the screen's speaker (ts_speaker, the feature speaker): the app builds this part only on a screen that has
+# one, from its board or another plugin. It hands the speaker to the component of plugin.yaml; ESPHome merges the two.
+timers:
+  speaker: ts_speaker
