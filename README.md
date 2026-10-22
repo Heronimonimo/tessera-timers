@@ -49,8 +49,9 @@ Every tile at every size on the four screens of the bench: [renders/overview.png
 ## Settings
 
 On a screen with a speaker (from its board, such as the reTerminal D1001, or from another plugin) the plugin's details
-also have the part **Ring when a timer is done**, on by default. Turn it off for a silent timer; the beeps follow the
-screen's volume.
+also have the part **Ring when a timer is done**, on by default, and the setting **Timer sound**: a switch that turns
+the beeps off and on again without a build, also on the screen's settings page and in Home Assistant. The beeps follow
+the screen's volume.
 
 On the screen's Plugins tab, the plugin's details, **Settings**:
 

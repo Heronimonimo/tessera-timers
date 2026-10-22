@@ -2,7 +2,7 @@
 # +10 min, +1 h) and runs either on the screen itself or as a timer helper of Home Assistant; the stopwatch runs on the
 # screen and keeps laps. Every name, label and hint is a key into translations/<language>.json, part "app".
 id: timers
-version: 0.2.0
+version: 0.2.1
 api: "0.12"
 icon: timer-outline
 maintainer: Heronimonimo
@@ -49,3 +49,5 @@ parts:
 # The setting of plugin.yaml, also in the plugin's details on the screen's Plugins tab (its name as id).
 settings:
   - { key: timer_opens_when_done, label: setting_opens, hint: setting_opens_hint }
+  # Only on a screen with a speaker (the part sound): elsewhere the editor shows it unavailable.
+  - { key: timer_sound, label: setting_sound, hint: setting_sound_hint }

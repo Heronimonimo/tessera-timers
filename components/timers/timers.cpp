@@ -371,7 +371,9 @@ void Timers::on_interval(uint32_t now_ms_chip) {
     }
   }
 #ifdef USE_SPEAKER
-  // The alarm again every two seconds while a timer rings; Stop, +1m or Cancel ends it at once.
+  // The alarm again every two seconds while a timer rings, unless its switch is off; Stop, +1m, Cancel or the switch
+  // ends it at once.
+  if (sound_on_ != nullptr && !sound_on_->state) sounding = false;
   if (sounding && !sounds_.playing() && now_ms_chip - rang_at_ >= 2000) {
     sounds_.play(alarm_);
     rang_at_ = now_ms_chip;
@@ -400,6 +402,11 @@ bool Timers::settings(tessera::SettingsPage &page) {
               [this](bool on) {
                 if (opens_ != nullptr) on ? opens_->turn_on() : opens_->turn_off();
               });
+#ifdef USE_SPEAKER
+  if (sound_on_ != nullptr)
+    page.toggle(text("sound"), [this] { return sound_on_->state; },
+                [this](bool on) { on ? sound_on_->turn_on() : sound_on_->turn_off(); });
+#endif
   return true;
 }
 

@@ -48,6 +48,7 @@ class Timers : public Component, public tessera::Plugin {
   // The part parts/sound.yaml, on a screen with a speaker: a timer that is done rings.
   void set_speaker(speaker::Speaker *s) { sounds_.set_speaker(s); }
   void set_alarm(tessera::Sound s) { alarm_ = s; }
+  void set_sound_on(switch_::Switch *s) { sound_on_ = s; }
   void loop() override { sounds_.loop(); }
   void before_update() override { sounds_.stop(); }
 #endif
@@ -82,6 +83,7 @@ class Timers : public Component, public tessera::Plugin {
   switch_::Switch *opens_{};
 #ifdef USE_SPEAKER
   tessera::Sound alarm_;
+  switch_::Switch *sound_on_{};
   tessera::SoundPlayer sounds_;
   uint32_t rang_at_ = 0;
 #endif

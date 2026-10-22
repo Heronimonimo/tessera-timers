@@ -6,8 +6,9 @@ helper of Home Assistant starts, pauses and cancels that one instead. face.cpp l
 and the keys for every size of tile and for the cards. register_plugin() takes the id, version, tile memory and the
 screen's texts from the manifest and translations/ beside this folder.
 
-On a screen with a speaker the part parts/sound.yaml hands it over as `speaker`: a timer that is done then rings with
-sounds/done.wav, built in by smart_display.sound() and played by the core's sound player (plugin_sound.h).
+On a screen with a speaker the part parts/sound.yaml hands it over as `speaker`, with its switch `sound_on`: a
+timer that is done then rings, while the switch is on, with sounds/done.wav, built in by smart_display.sound() and
+played by the core's sound player (plugin_sound.h).
 """
 from pathlib import Path
 
@@ -21,6 +22,7 @@ DEPENDENCIES = ["smart_display", "binary_sensor", "switch"]
 CONF_DONE = "done"
 CONF_OPENS = "opens_when_done"
 CONF_SPEAKER = "speaker"
+CONF_SOUND_ON = "sound_on"
 DONE = Path(__file__).parent / "sounds" / "done.wav"
 
 timers_ns = cg.esphome_ns.namespace("timers")
@@ -40,6 +42,7 @@ CONFIG_SCHEMA = cv.All(
             cv.Required(CONF_DONE): cv.use_id(binary_sensor.BinarySensor),
             cv.Required(CONF_OPENS): cv.use_id(switch.Switch),
             cv.Optional(CONF_SPEAKER): cv.use_id(speaker.Speaker),
+            cv.Optional(CONF_SOUND_ON): cv.use_id(switch.Switch),
         }
     ).extend(cv.COMPONENT_SCHEMA),
     check_sound,
@@ -55,3 +58,5 @@ async def to_code(config):
     if CONF_SPEAKER in config:
         cg.add(var.set_speaker(await cg.get_variable(config[CONF_SPEAKER])))
         cg.add(var.set_alarm(smart_display.sound(config[CONF_ID], "done", DONE)))
+        if CONF_SOUND_ON in config:
+            cg.add(var.set_sound_on(await cg.get_variable(config[CONF_SOUND_ON])))

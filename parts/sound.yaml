@@ -1,4 +1,16 @@
 # The alarm on the screen's speaker (ts_speaker, the feature speaker): the app builds this part only on a screen that has
-# one, from its board or another plugin. It hands the speaker to the component of plugin.yaml; ESPHome merges the two.
+# one, from its board or another plugin. It hands the speaker to the component of plugin.yaml (ESPHome merges the two),
+# with a switch that turns the alarm off, kept on the screen and shown in Home Assistant, on the screen's settings page
+# and in the editor.
+switch:
+  - platform: template
+    id: timers_sound_on
+    name: "Timer sound"
+    icon: mdi:volume-high
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON
+    entity_category: config
+
 timers:
   speaker: ts_speaker
+  sound_on: timers_sound_on

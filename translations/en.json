@@ -24,7 +24,8 @@
     "lap_n": "Lap {n}",
     "no_clock": "Waiting for the clock",
     "unavailable": "Unavailable",
-    "opens_when_done": "Open when done"
+    "opens_when_done": "Open when done",
+    "sound": "Sound"
   },
   "app": {
     "name": "Timers",
@@ -38,6 +39,8 @@
     "setting_opens": "Open the timer when it is done",
     "setting_opens_hint": "A timer on the screen opens its card when the time is up, whatever page shows.",
     "part_sound": "Ring when a timer is done",
-    "part_sound_hint": "Three beeps every two seconds for a minute, or until you tap Stop. Follows the screen's volume."
+    "part_sound_hint": "Three beeps every two seconds for a minute, or until you tap Stop. Follows the screen's volume.",
+    "setting_sound": "Timer sound",
+    "setting_sound_hint": "The beeps when a timer is done, on a screen with a speaker. They follow the screen's volume."
   }
 }
