@@ -25,7 +25,10 @@
     "no_clock": "Waiting for the clock",
     "unavailable": "Unavailable",
     "opens_when_done": "Open when done",
-    "sound": "Sound"
+    "sound": "Sound",
+    "minutes": "{n} min",
+    "hours": "{h} h {m}",
+    "under_minute": "< 1 min"
   },
   "app": {
     "name": "Timers",
@@ -41,6 +44,10 @@
     "part_sound": "Ring when a timer is done",
     "part_sound_hint": "Three beeps every two seconds for a minute, or until you tap Stop. Follows the screen's volume.",
     "setting_sound": "Timer sound",
-    "setting_sound_hint": "The beeps when a timer is done, on a screen with a speaker. They follow the screen's volume."
+    "setting_sound_hint": "The beeps when a timer is done, on a screen with a speaker. They follow the screen's volume.",
+    "bar_timer": "Running timer",
+    "bar_timer_example": "6 min",
+    "bar_stopwatch": "Running stopwatch",
+    "bar_stopwatch_example": "12 min"
   }
 }

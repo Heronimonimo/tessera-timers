@@ -25,7 +25,10 @@
     "no_clock": "Wacht op de klok",
     "unavailable": "Niet beschikbaar",
     "opens_when_done": "Openen als hij klaar is",
-    "sound": "Geluid"
+    "sound": "Geluid",
+    "minutes": "{n} min",
+    "hours": "{h} u {m}",
+    "under_minute": "< 1 min"
   },
   "app": {
     "name": "Timers",
@@ -41,6 +44,10 @@
     "part_sound": "Piepen als een timer klaar is",
     "part_sound_hint": "Drie piepjes om de twee seconden, een minuut lang of tot je op Stop tikt. Volgt het volume van het scherm.",
     "setting_sound": "Geluid van de timer",
-    "setting_sound_hint": "De piepjes als een timer klaar is, op een scherm met een speaker. Ze volgen het volume van het scherm."
+    "setting_sound_hint": "De piepjes als een timer klaar is, op een scherm met een speaker. Ze volgen het volume van het scherm.",
+    "bar_timer": "Lopende timer",
+    "bar_timer_example": "6 min",
+    "bar_stopwatch": "Lopende stopwatch",
+    "bar_stopwatch_example": "12 min"
   }
 }

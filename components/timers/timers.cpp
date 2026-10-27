@@ -19,7 +19,8 @@ static constexpr int64_t RINGS_MS = 30 * 60 * 1000;          // a timer that is 
 static constexpr int64_t SOUNDS_MS = 60 * 1000;              // and rings for a minute, or until Stop
 static constexpr uint32_t SAVED_VERSION = 2;
 static constexpr uint32_t ICON_PLAY = 0xF040A, ICON_PAUSE = 0xF03E4, ICON_STOP = 0xF04DB, ICON_RESTART = 0xF0709,
-                          ICON_CLOSE = 0xF0156, ICON_PLUS = 0xF0415;
+                          ICON_CLOSE = 0xF0156, ICON_PLUS = 0xF0415, ICON_TIMER = 0xF051B, ICON_STOPWATCH = 0xF0996,
+                          ICON_RINGING = 0xF009E;
 
 struct Saved {
   uint32_t version;
@@ -66,6 +67,8 @@ void Timers::setup() {
   add_tile("stopwatch", [this]() { return make_tile(this, Kind::STOPWATCH); });
   add_card("timer", [this]() { return make_card(this, Kind::TIMER); }, true);
   add_card("stopwatch", [this]() { return make_card(this, Kind::STOPWATCH); }, true);
+  add_bar_item("timer", [this]() { return timer_item(); });
+  add_bar_item("stopwatch", [this]() { return stopwatch_item(); });
 
   // What ran before a restart runs on: the slots are kept against the clock of the day, not the chip's.
   saved_ = global_preferences->make_preference<Saved>(fnv1_hash("timers.slots"));
@@ -394,6 +397,65 @@ void Timers::on_interval(uint32_t now_ms_chip) {
     dirty_ = false;
     saved_at_ = now_ms_chip;
   }
+}
+
+// "6 min", "1 h 05", "< 1 min": the bar asks every five seconds, so it says whole minutes. A timer rounds up (it says
+// 1 min until its last minute), a stopwatch down.
+std::string Timers::minutes_text(uint32_t seconds, bool up) {
+  const uint32_t minutes = up ? (seconds + 59) / 60 : seconds / 60;
+  if (!minutes || (up && seconds < 60)) return text("under_minute");
+  if (minutes < 60) return tessera::format(text("minutes"), static_cast<long>(minutes));
+  char rest[4];
+  snprintf(rest, sizeof rest, "%02u", static_cast<unsigned>(minutes % 60));
+  return tessera::fill(tessera::fill(text("hours"), "h", std::to_string(minutes / 60)).c_str(), "m", rest);
+}
+
+tessera::BarItem Timers::timer_item() {
+  tessera::BarItem item;
+  const int64_t now = now_ms();
+  if (!now) return item;
+  bool done = false;
+  uint32_t first = UINT32_MAX;
+  for (int i = 0; i < SLOTS; ++i) {
+    const Slot &s = slots_[i];
+    if (s.kind != Kind::TIMER) continue;
+    if (s.run == Run::DONE) done = true;
+    if (s.run == Run::RUNNING) first = std::min(first, seconds_up(s.mark_ms - now));
+    // A timer helper, as its tile last saw it.
+    const Helper &h = helpers_[i];
+    if (s.run != Run::DONE && h.known && h.available && h.run == Run::RUNNING &&
+        static_cast<int64_t>(h.finishes_at) * 1000 > now)
+      first = std::min(first, seconds_up(static_cast<int64_t>(h.finishes_at) * 1000 - now));
+  }
+  if (done) {
+    item.shown = true;
+    item.icon = ICON_RINGING;
+    item.text = text("done");
+    item.tone = Tone::ALERT;
+  } else if (first != UINT32_MAX) {
+    item.shown = true;
+    item.icon = ICON_TIMER;
+    item.text = minutes_text(first, true);
+    item.tone = Tone::BUSY;
+  }
+  return item;
+}
+
+tessera::BarItem Timers::stopwatch_item() {
+  tessera::BarItem item;
+  const int64_t now = now_ms();
+  if (!now) return item;
+  int64_t longest = -1;
+  for (int i = 0; i < SLOTS; ++i)
+    if (slots_[i].kind == Kind::STOPWATCH && slots_[i].run == Run::RUNNING)
+      longest = std::max(longest, now - slots_[i].mark_ms);
+  if (longest >= 0) {
+    item.shown = true;
+    item.icon = ICON_STOPWATCH;
+    item.text = minutes_text(static_cast<uint32_t>(longest / 1000), false);
+    item.tone = Tone::ACCENT;
+  }
+  return item;
 }
 
 bool Timers::settings(tessera::SettingsPage &page) {

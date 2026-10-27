@@ -68,6 +68,10 @@ class Timers : public Component, public tessera::Plugin {
 
  protected:
   void changed();
+  // The top bar's items: the timer that ends first (or one that is done), the stopwatch that runs longest.
+  tessera::BarItem timer_item();
+  tessera::BarItem stopwatch_item();
+  std::string minutes_text(uint32_t seconds, bool up);
   void start_helper(const char *entity, uint32_t seconds);
   Helper &helper(const Slot &s) { return helpers_[&s - slots_]; }
 

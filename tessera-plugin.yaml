@@ -2,7 +2,7 @@
 # +10 min, +1 h) and runs either on the screen itself or as a timer helper of Home Assistant; the stopwatch runs on the
 # screen and keeps laps. Every name, label and hint is a key into translations/<language>.json, part "app".
 id: timers
-version: 0.2.1
+version: 0.3.0
 api: "0.12"
 icon: timer-outline
 maintainer: Heronimonimo
@@ -33,10 +33,16 @@ tiles:
   # A stopwatch on the screen, with the last three laps.
   - id: stopwatch
     name: stopwatch_name
-    icon: timer
+    icon: progress-clock
     sizes: { min: 1x1, max: 3x3 }
     memory: 2200
     example: stopwatch_example
+
+# The top bar, when a person places them there: the timer that ends first while one runs (red when one is done), and
+# the stopwatch that runs longest. In whole minutes: the bar asks every five seconds.
+bar_items:
+  - { id: timer, label: bar_timer, icon: timer-outline, example: bar_timer_example }
+  - { id: stopwatch, label: bar_stopwatch, icon: progress-clock, example: bar_stopwatch_example }
 
 cards:
   - { id: timer, name: timer_card, wide: true }

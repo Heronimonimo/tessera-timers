@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0
+- The top bar can show a running timer and a running stopwatch: in Layout, add **Running timer** or **Running
+  stopwatch** to a page's top bar, under From plugins. It shows only while one runs, in whole minutes ("6 min"), and
+  turns red with "Done" when a timer is done. With several, the timer that ends first and the stopwatch that runs
+  longest.
+- The Stopwatch tile's icon is one of Tessera's own now (it showed none).
+
 ## 0.2.1
 - A switch for the sound: **Timer sound** in the plugin's settings, on the screen's settings page and in Home Assistant,
   on a screen with a speaker. Turning it off silences a timer that rings at once.

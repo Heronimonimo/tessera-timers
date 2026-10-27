@@ -46,6 +46,13 @@ The card on the Guition 4-inch and the CYD, drawn by the real firmware on Tesser
 
 Every tile at every size on the four screens of the bench: [renders/overview.png](renders/overview.png).
 
+## In the top bar
+
+In Layout, open a page's top bar and add **Running timer** or **Running stopwatch** from the plugins. They show only
+while a timer or a stopwatch runs, in whole minutes ("6 min", "1 h 05"): the top bar looks again every five seconds,
+so the tile and the card keep the seconds. A timer that is done shows a red bell and Done. With several timers the bar
+shows the one that ends first, with several stopwatches the one that runs longest.
+
 ## Settings
 
 On a screen with a speaker (from its board, such as the reTerminal D1001, or from another plugin) the plugin's details
