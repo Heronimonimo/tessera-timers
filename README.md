@@ -75,5 +75,5 @@ to send a notification to your phone.
   ring starts full again. Home Assistant's own `timer.finished` event fires as always.
 - The screen counts on its own clock, which Home Assistant sets: until it is set (right after a start) a timer on the
   screen waits.
-- Tried on the preview bench on the CYD, the Guition 4-inch, the Waveshare 4.3-inch standing up and the Guition 10.1-inch, light
-  and dark. Not yet on a real screen.
+- Tried on a real screen, the M5Stack Tab5, and on the preview bench on the CYD, the Guition 4-inch, the Waveshare
+  4.3-inch standing up and the Guition 10.1-inch, light and dark.
