@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1
+- Nothing changes on the screen. The README says the plugin was tried on a real screen, the M5Stack Tab5, and the
+  plugin is now checked against Tessera 0.4.90.
+
 ## 0.3.0
 - The top bar can show a running timer and a running stopwatch: in Layout, add **Running timer** or **Running
   stopwatch** to a page's top bar, under From plugins. It shows only while one runs, in whole minutes ("6 min"), and
