@@ -11,13 +11,13 @@ on:
     inputs:
       tessera_ref:
         description: Tessera ref to build against (a screens-v* tag or a branch)
-        default: screens-v0.4.90
+        default: screens-v0.4.92
       esphome:
         description: ESPHome version (the Tessera add-on's)
         default: 2026.9.0
 
 env:
-  TESSERA_REF: ${{ inputs.tessera_ref || 'screens-v0.4.90' }}
+  TESSERA_REF: ${{ inputs.tessera_ref || 'screens-v0.4.92' }}
   ESPHOME_VERSION: ${{ inputs.esphome || '2026.9.0' }}
 
 jobs:
