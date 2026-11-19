@@ -14,13 +14,14 @@ from pathlib import Path
 
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.components import binary_sensor, smart_display, speaker, switch
+from esphome.components import binary_sensor, smart_display, speaker, switch, text_sensor
 from esphome.const import CONF_ID
 
-DEPENDENCIES = ["smart_display", "binary_sensor", "switch"]
+DEPENDENCIES = ["smart_display", "binary_sensor", "switch", "text_sensor"]
 
 CONF_DONE = "done"
 CONF_OPENS = "opens_when_done"
+CONF_DONE_LIST = "done_list"
 CONF_SPEAKER = "speaker"
 CONF_SOUND_ON = "sound_on"
 DONE = Path(__file__).parent / "sounds" / "done.wav"
@@ -41,6 +42,7 @@ CONFIG_SCHEMA = cv.All(
             cv.GenerateID(): cv.declare_id(Timers),
             cv.Required(CONF_DONE): cv.use_id(binary_sensor.BinarySensor),
             cv.Required(CONF_OPENS): cv.use_id(switch.Switch),
+            cv.Optional(CONF_DONE_LIST): cv.use_id(text_sensor.TextSensor),
             cv.Optional(CONF_SPEAKER): cv.use_id(speaker.Speaker),
             cv.Optional(CONF_SOUND_ON): cv.use_id(switch.Switch),
         }
@@ -55,6 +57,8 @@ async def to_code(config):
     await smart_display.register_plugin(var, __file__)
     cg.add(var.set_done(await cg.get_variable(config[CONF_DONE])))
     cg.add(var.set_opens(await cg.get_variable(config[CONF_OPENS])))
+    if CONF_DONE_LIST in config:
+        cg.add(var.set_done_list(await cg.get_variable(config[CONF_DONE_LIST])))
     if CONF_SPEAKER in config:
         cg.add(var.set_speaker(await cg.get_variable(config[CONF_SPEAKER])))
         cg.add(var.set_alarm(smart_display.sound(config[CONF_ID], "done", DONE)))

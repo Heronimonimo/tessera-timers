@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0
+- A new sensor in Home Assistant, **Timers done**, names the timer helpers whose timer is done, such as
+  `timer.eggs, timer.rice`. A helper leaves the list when you tap Stop, +1m or Cancel on its tile, so an automation can
+  tell several timers on one screen apart, for example to stop the right alarm on a speaker. The **Timer done** binary
+  sensor stays as it was.
+
 ## 0.3.1
 - Nothing changes on the screen. The README says the plugin was tried on a real screen, the M5Stack Tab5, and the
   plugin is now checked against Tessera 0.4.90.

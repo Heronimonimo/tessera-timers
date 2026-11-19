@@ -18,7 +18,7 @@ class TimerTile : public tessera::Tile {
   }
 
   void on_state(JsonObjectConst data) override {
-    if (entity_[0]) plugin_->read(plugin_->slot(tile_, kind_), data, helper_);
+    if (entity_[0]) plugin_->read(plugin_->slot(tile_, kind_), entity_, data, helper_);
   }
 
   void on_tick(uint32_t epoch) override { paint(); }
@@ -59,7 +59,7 @@ class TimerCard : public tessera::Card {
   }
 
   void on_state(JsonObjectConst data) override {
-    if (entity_[0]) plugin_->read(plugin_->slot(tile_, kind_), data, helper_);
+    if (entity_[0]) plugin_->read(plugin_->slot(tile_, kind_), entity_, data, helper_);
     paint();
   }
 

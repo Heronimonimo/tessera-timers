@@ -121,9 +121,10 @@ void Timers::changed() {
   tessera::refresh();
 }
 
-void Timers::read(Slot &s, JsonObjectConst data, Helper &h) {
+void Timers::read(Slot &s, const char *entity, JsonObjectConst data, Helper &h) {
   const char *state = data["state"] | "";
   if (!*state) return;
+  snprintf(h.entity, sizeof h.entity, "%s", entity);
   h.known = true;
   h.available = strcmp(state, "unavailable") != 0 && strcmp(state, "unknown") != 0;
   h.run = !strcmp(state, "active") ? Run::RUNNING : !strcmp(state, "paused") ? Run::PAUSED : Run::IDLE;
@@ -387,6 +388,23 @@ void Timers::on_interval(uint32_t now_ms_chip) {
   if (done_ != nullptr && (ringing != ringing_ || !done_->has_state())) {
     ringing_ = ringing;
     done_->publish_state(ringing);
+  }
+  if (done_list_ != nullptr) {
+    // A timer helper drops out of the list once Stop, +1m or Cancel is tapped on it, or after half an hour. A state
+    // of Home Assistant holds 255 characters: a helper that would not fit whole is left out.
+    tessera::Text names;
+    for (int i = 0; i < SLOTS; ++i) {
+      const Slot &s = slots_[i];
+      const char *entity = helpers_[i].entity;
+      if (s.kind != Kind::TIMER || s.run != Run::DONE || !*entity) continue;
+      if (names.size() + (names.empty() ? 0 : 2) + strlen(entity) > 255) continue;
+      if (!names.empty()) names += ", ";
+      names += entity;
+    }
+    if (names != done_names_ || !done_list_->has_state()) {
+      done_names_ = names;
+      done_list_->publish_state(std::string(names.data(), names.size()));
+    }
   }
   // Kept at most once a second, so a run of taps writes the flash once.
   if (dirty_ && now_ms_chip - saved_at_ >= 1000) {

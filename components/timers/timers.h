@@ -3,6 +3,7 @@
 #include "esphome/core/preferences.h"
 #include "esphome/components/binary_sensor/binary_sensor.h"
 #include "esphome/components/switch/switch.h"
+#include "esphome/components/text_sensor/text_sensor.h"
 #include "esphome/components/smart_display/plugin_api.h"
 #include "esphome/components/smart_display/plugin_sound.h"   // empty on a screen without a speaker
 #include "face.h"
@@ -28,6 +29,7 @@ struct Slot {
 
 // A timer helper of Home Assistant, as the tile's data says it is now.
 struct Helper {
+  char entity[96] = {};  // the timer helper, for the sensor that names the timers that are done
   bool known = false, available = false;
   Run run = Run::IDLE;
   uint32_t duration_s = 0, remaining_s = 0, finishes_at = 0;
@@ -44,6 +46,7 @@ class Timers : public Component, public tessera::Plugin {
 
   void set_done(binary_sensor::BinarySensor *s) { done_ = s; }
   void set_opens(switch_::Switch *s) { opens_ = s; }
+  void set_done_list(text_sensor::TextSensor *s) { done_list_ = s; }
 #ifdef USE_SPEAKER
   // The part parts/sound.yaml, on a screen with a speaker: a timer that is done rings.
   void set_speaker(speaker::Speaker *s) { sounds_.set_speaker(s); }
@@ -57,9 +60,9 @@ class Timers : public Component, public tessera::Plugin {
   int64_t now_ms();
   // The slot of a tile (its index in the layout), made when it has none.
   Slot &slot(int tile, Kind kind);
-  // Read a timer helper from a tile's data into `h`, and see whether it rang since the slot last saw it. The slot
-  // keeps a copy for the card the tile opens.
-  void read(Slot &s, JsonObjectConst data, Helper &h);
+  // Read the timer helper `entity` from a tile's data into `h`, and see whether it rang since the slot last saw it.
+  // The slot keeps a copy for the card the tile opens.
+  void read(Slot &s, const char *entity, JsonObjectConst data, Helper &h);
   const Helper &helper_of(const Slot &s) { return helper(s); }
   // A key tapped on a face of the slot; `entity` is the timer helper ("" for a timer on the screen).
   void press(Slot &s, Key key, const char *entity, const Helper &h);
@@ -85,6 +88,9 @@ class Timers : public Component, public tessera::Plugin {
   uint32_t base_millis_ = 0;
   binary_sensor::BinarySensor *done_{};
   switch_::Switch *opens_{};
+  // The timer helpers that are done, for an automation that has to tell several apart: "timer.eggs, timer.rice".
+  text_sensor::TextSensor *done_list_{};
+  tessera::Text done_names_;
 #ifdef USE_SPEAKER
   tessera::Sound alarm_;
   switch_::Switch *sound_on_{};

@@ -67,6 +67,26 @@ On the screen's Plugins tab, the plugin's details, **Settings**:
 Home Assistant also gets a **Timer done** binary sensor of the screen: on while a timer of the screen is done. Use it
 to send a notification to your phone.
 
+With several timer helpers on one screen, the **Timers done** sensor says which ones are done: their entity ids, such
+as `timer.eggs, timer.rice`, or nothing. A helper leaves the list when Stop, +1m or Cancel is tapped on its tile, or
+after half an hour. An automation that plays an alarm for `timer.eggs` can stop it when the helper is no longer in the
+list:
+
+```yaml
+triggers:
+  - trigger: state
+    entity_id: sensor.kitchen_screen_timers_done
+conditions:
+  - condition: template
+    value_template: "{{ 'timer.eggs' not in trigger.to_state.state.split(', ') }}"
+actions:
+  - action: script.turn_off
+    target:
+      entity_id: script.eggs_alarm
+```
+
+Timers that run on the screen itself, without a helper, have no entity id, so only the binary sensor counts them.
+
 ## Good to know
 
 - A timer on the screen and the stopwatch belong to their tile's place in the layout: moving a tile to another place
