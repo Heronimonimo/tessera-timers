@@ -153,6 +153,21 @@ void Timers::read(Slot &s, const char *entity, JsonObjectConst data, Helper &h) 
   }
 }
 
+void Timers::silence() {
+  bool any = false;
+  for (int i = 0; i <= SLOTS; ++i) {
+    Slot &s = slots_[i];
+    if (s.kind == Kind::TIMER && s.run == Run::DONE) {
+      s.run = Run::IDLE;
+      any = true;
+    }
+  }
+#ifdef USE_SPEAKER
+  sounds_.stop();
+#endif
+  if (any) changed();
+}
+
 void Timers::start_helper(const char *entity, uint32_t seconds) {
   if (!seconds) {
     tessera::action("timer.start", entity);

@@ -64,6 +64,9 @@ class Timers : public Component, public tessera::Plugin {
   // The slot keeps a copy for the card the tile opens.
   void read(Slot &s, const char *entity, JsonObjectConst data, Helper &h);
   const Helper &helper_of(const Slot &s) { return helper(s); }
+  // Every timer that is done stops ringing and goes back to idle, as Stop on each would: the button Silence timers,
+  // for an automation that silenced its own alarm another way. Running timers run on.
+  void silence();
   // A key tapped on a face of the slot; `entity` is the timer helper ("" for a timer on the screen).
   void press(Slot &s, Key key, const char *entity, const Helper &h);
   // What a face of the slot shows now.

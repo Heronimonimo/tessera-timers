@@ -87,6 +87,10 @@ actions:
 
 Timers that run on the screen itself, without a helper, have no entity id, so only the binary sensor counts them.
 
+The **Silence timers** button of the screen does what Stop does on every timer of the screen that is done: the ringing
+stops and the timer goes back to idle, while running timers run on. Press it from an automation that stopped its own
+alarm another way, such as a button on a phone's notification, so the screen stops too.
+
 ## Good to know
 
 - A timer on the screen and the stopwatch belong to their tile's place in the layout: moving a tile to another place

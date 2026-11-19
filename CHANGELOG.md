@@ -5,6 +5,9 @@
   `timer.eggs, timer.rice`. A helper leaves the list when you tap Stop, +1m or Cancel on its tile, so an automation can
   tell several timers on one screen apart, for example to stop the right alarm on a speaker. The **Timer done** binary
   sensor stays as it was.
+- A new button in Home Assistant, **Silence timers**, does what Stop does on every timer of the screen that is done:
+  the ringing stops and the timer goes back to idle. An automation that stopped its own alarm another way (a button on
+  a phone's notification, a speaker's button) can silence the screen with it. Running timers run on.
 
 ## 0.3.1
 - Nothing changes on the screen. The README says the plugin was tried on a real screen, the M5Stack Tab5, and the

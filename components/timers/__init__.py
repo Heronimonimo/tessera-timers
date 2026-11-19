@@ -17,7 +17,7 @@ import esphome.config_validation as cv
 from esphome.components import binary_sensor, smart_display, speaker, switch, text_sensor
 from esphome.const import CONF_ID
 
-DEPENDENCIES = ["smart_display", "binary_sensor", "switch", "text_sensor"]
+DEPENDENCIES = ["smart_display", "binary_sensor", "switch", "text_sensor", "button"]
 
 CONF_DONE = "done"
 CONF_OPENS = "opens_when_done"
