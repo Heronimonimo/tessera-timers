@@ -12,7 +12,7 @@ topics: [time, home]
 requires:
   esphome: 2026.6.2
 boards: any
-flash_kb: 84
+flash_kb: 34
 
 permissions:
   # Only for a timer tile that belongs to a timer helper of Home Assistant; a timer on the screen calls nothing.
