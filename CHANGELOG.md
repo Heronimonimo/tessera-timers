@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0
+- **Home Assistant Assist voice timers**: when `voice_assistant` (such as `voice_assist`) is present on the same screen, Timers automatically enables `FEATURE_TIMERS` and tracks started, updated, cancelled, and finished voice timers.
+- **All timers tile & card**: new `overview` tile (`1×1` up to `4×3` or full page) and detail card showing all active, paused, and finished timers (screen, Home Assistant helpers, and Assist voice timers) with live countdowns, progress bars, inline pause/cancel for screen/helper timers, and an **Ask Assist** button.
+- **Global finished-timer popup**: new **Show popup when a timer is done** setting (on by default) wakes the screen and shows a dismissible popup over any page or screensaver when any timer finishes.
+- **Speaker volume lift (`raise_volume`) & audio coordination**: on screens with a speaker, **Timer alarm volume** raises the speaker volume while ringing and restores it when stopped, claiming audio output via `tessera::audio` (requires plugin API `0.29`).
+
 ## 0.4.0
 - A new sensor in Home Assistant, **Timers done**, names the timer helpers whose timer is done, such as
   `timer.eggs, timer.rice`. A helper leaves the list when you tap Stop, +1m or Cancel on its tile, so an automation can

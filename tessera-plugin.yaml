@@ -1,9 +1,9 @@
-# Timers: a kitchen timer and a stopwatch on the glass. The timer is set with keys that add time (+10 s, +1 min,
-# +10 min, +1 h) and runs either on the screen itself or as a timer helper of Home Assistant; the stopwatch runs on the
-# screen and keeps laps. Every name, label and hint is a key into translations/<language>.json, part "app".
+# Timers: a kitchen timer, a stopwatch, and Assist voice timers on the glass. The kitchen timer is set with keys that
+# add time (+10 s, +1 min, +10 min, +1 h) and runs either on the screen itself or as a timer helper of Home Assistant;
+# the stopwatch runs on the screen and keeps laps; All timers combines active screen, helper, and Assist voice timers.
 id: timers
-version: 0.4.0
-api: "0.12"
+version: 0.5.0
+api: "0.29"
 icon: timer-outline
 maintainer: Heronimonimo
 license: MIT
@@ -12,7 +12,7 @@ topics: [time, home]
 requires:
   esphome: 2026.6.2
 boards: any
-flash_kb: 34
+flash_kb: 42
 
 permissions:
   # Only for a timer tile that belongs to a timer helper of Home Assistant; a timer on the screen calls nothing.
@@ -37,6 +37,13 @@ tiles:
     sizes: { min: 1x1, max: 3x3 }
     memory: 2200
     example: stopwatch_example
+  # All active timers (screen, Home Assistant helpers, and Assist voice timers) in one live tile.
+  - id: overview
+    name: overview_name
+    icon: timer-outline
+    sizes: { min: 1x1, max: 4x3, full: true }
+    memory: 1400
+    example: overview_example
 
 # The top bar, when a person places them there: the timer that ends first while one runs (red when one is done), and
 # the stopwatch that runs longest. In whole minutes: the bar asks every five seconds.
@@ -47,13 +54,16 @@ bar_items:
 cards:
   - { id: timer, name: timer_card, wide: true }
   - { id: stopwatch, name: stopwatch_card, wide: true }
+  - { id: overview, name: overview_card, wide: true }
 
 # The alarm when a timer is done, on a screen with a speaker (from its board or another plugin): on by default.
 parts:
   - { id: sound, file: parts/sound.yaml, label: part_sound, hint: part_sound_hint, features: [speaker], flash_kb: 60, default: true }
 
-# The setting of plugin.yaml, also in the plugin's details on the screen's Plugins tab (its name as id).
+# The settings of plugin.yaml and parts/sound.yaml, shown on the screen's Plugins tab and Settings page.
 settings:
+  - { key: timer_popup_when_done, label: setting_popup, hint: setting_popup_hint }
   - { key: timer_opens_when_done, label: setting_opens, hint: setting_opens_hint }
   # Only on a screen with a speaker (the part sound): elsewhere the editor shows it unavailable.
   - { key: timer_sound, label: setting_sound, hint: setting_sound_hint }
+  - { key: timer_alarm_volume, label: setting_alarm_volume, hint: setting_alarm_volume_hint }
