@@ -1,7 +1,7 @@
 # What a screen gets when it takes this plugin: the component, a sensor that tells Home Assistant a timer on the screen
 # is done (for a notification on your phone), one that names the timer helpers that are done (for an automation that
 # has to tell several apart), a button that silences every timer that is done (for an automation that stopped its own
-# alarm another way), and the setting that opens the timer's card when it is done.
+# alarm another way), and settings for how finished timers appear on the screen.
 binary_sensor:
   - platform: template
     id: timers_done
@@ -23,6 +23,15 @@ button:
 
 switch:
   - platform: template
+    id: timers_popup
+    name: "Timer popup when done"
+    icon: mdi:message-alert-outline
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON
+    entity_category: config
+    on_turn_off:
+      - lambda: id(timers_plugin).popup_off();
+  - platform: template
     id: timers_opens
     name: "Timer opens when done"
     icon: mdi:timer-eye-outline
@@ -33,5 +42,6 @@ switch:
 timers:
   id: timers_plugin
   done: timers_done
+  popup_when_done: timers_popup
   opens_when_done: timers_opens
   done_list: timers_done_list

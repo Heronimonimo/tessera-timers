@@ -1,5 +1,5 @@
 # What tools/preview.py shows (docs/PREVIEW.md): a pasta timer of Home Assistant that runs, an oven timer that is
-# paused, a timer on the screen waiting for its time, and a stopwatch. Moments are made from the time of the render.
+# paused, a timer on the screen waiting for its time, a stopwatch, and the All timers overview. Moments are made from the time of the render.
 tiles:
   - tile: timer
     name: Pasta
@@ -14,6 +14,9 @@ tiles:
   - tile: stopwatch
     name: Stopwatch
     sizes: [1x1, 2x1, 1x2, 2x2]
+  - tile: overview
+    name: All timers
+    sizes: [1x1, 2x1, 2x2]
 
 states:
   timer.pasta:
@@ -33,3 +36,4 @@ states:
 cards:
   - { card: timer, entity: timer.pasta }
   - { card: stopwatch }
+  - { card: overview }
